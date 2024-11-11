@@ -1,17 +1,31 @@
+const setSize = (container, camera, renderer) => {
+  // Set the camera's aspect ratio
+  camera.aspect = container.clientWidth / container.clientHeight;
+
+  // update the camera's frustum (because we changed the aspect ratio)
+  camera.updateProjectionMatrix();
+
+  // update the size of the renderer AND the canvas
+  renderer.setSize(container.clientWidth, container.clientHeight);
+
+  // set the pixel ratio (for mobile devices)
+  renderer.setPixelRatio(window.devicePixelRatio);
+};
+
 class Resizer {
   constructor(container, camera, renderer) {
-    // Set the camera's aspect ratio
-    camera.aspect = container.clientWidth / container.clientHeight;
+    setSize(container, camera, renderer);
 
-    // update the camera's frustum (because we changed the aspect ratio)
-    camera.updateProjectionMatrix();
-
-    // update the size of the renderer AND the canvas
-    renderer.setSize(container.clientWidth, container.clientHeight);
-
-    // set the pixel ratio (for mobile devices)
-    renderer.setPixelRatio(window.devicePixelRatio);
+    window.addEventListener("resize", () => {
+      // set the size again if a resize occurs
+      setSize(container, camera, renderer);
+      this.onResize();
+    });
   }
+
+  // placeholder method / empty method
+  // I've never seen this pattern before
+  onResize() {}
 }
 
 export { Resizer };
