@@ -1,6 +1,23 @@
-import { BoxBufferGeometry, Mesh, MeshStandardMaterial, MathUtils } from "three";
+import {
+  BoxBufferGeometry,
+  Mesh,
+  MeshStandardMaterial,
+  MathUtils,
+  TextureLoader,
+} from "three";
 
 const radiansPerSecond = MathUtils.degToRad(30);
+
+function createMaterial() {
+  const textureLoader = new TextureLoader();
+
+  const texture = textureLoader.load("/assets/textures/uv-test-bw.png");
+
+  // create a "standard" material
+  const material = new MeshStandardMaterial({ map: texture });
+
+  return material;
+}
 
 function createCube() {
   // create a geometry
@@ -11,7 +28,7 @@ function createCube() {
   // MeshBasicMaterial does not react to lights
   // const material = new MeshBasicMaterial();
   // a physically correct "standard" material
-  const material = new MeshStandardMaterial({ color: "purple" });
+  const material = createMaterial();
 
   // create a Mesh containing the geometry and material
   const cube = new Mesh(geometry, material);
