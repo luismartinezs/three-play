@@ -12,7 +12,7 @@ function main() {
   world.render();
 
   // start the loop (produce a stream of frames)
-  // world.start();
+  world.start();
 }
 
 // call main to start the app
