@@ -21,6 +21,9 @@ function createControls(camera, canvas) {
   // controls.minPolarAngle = 0; // default
   // controls.maxPolarAngle = Math.PI; // default
 
+  // set orbiting center around 1 position of y axis
+  controls.target.y = 1;
+
   controls.tick = () => controls.update();
 
   return controls;

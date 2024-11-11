@@ -19,6 +19,10 @@ function createMeshGroup() {
     color: "indigo",
   });
 
+  // material.flatShading = true;
+  // material.needsUpdate = true;
+
+
   // create one prototype sphere
   const protoSphere = new Mesh(geometry, material);
 
