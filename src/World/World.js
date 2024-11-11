@@ -28,13 +28,13 @@ class World {
     container.append(renderer.domElement);
 
     const cube = createCube();
-    const light = createLights();
+    const { ambientLight, mainLight } = createLights();
 
     loop.updatables.push(controls);
     // disable mesh rotation
     // loop.updatables.push(cube);
 
-    scene.add(cube, light);
+    scene.add(ambientLight, mainLight, cube);
 
     const resizer = new Resizer(container, camera, renderer);
 
