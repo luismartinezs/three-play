@@ -1,3 +1,4 @@
+import { loadBirds } from "./components/birds/birds.js";
 import { createCamera } from "./components/camera.js";
 import { createAxesHelper, createGridHelper } from "./helpers.js";
 import { createCube } from "./components/cube.js";
@@ -17,6 +18,7 @@ let camera;
 let renderer;
 let scene;
 let loop;
+let controls;
 
 class World {
   // 1. Create an instance of the World app
@@ -26,16 +28,16 @@ class World {
     scene = createScene();
     loop = new Loop(camera, scene, renderer);
     container.append(renderer.domElement);
+    controls = createControls(camera, renderer.domElement);
 
-    const controls = createControls(camera, renderer.domElement);
     // const cube = createCube();
     const { ambientLight, mainLight } = createLights();
     // const meshGroup = createMeshGroup();
-    const train = new Train();
+    // const train = new Train();
 
-    loop.updatables.push(controls, train);
+    loop.updatables.push(controls);
 
-    scene.add(ambientLight, mainLight, train);
+    scene.add(ambientLight, mainLight);
 
     // loop.updatables.push(controls, meshGroup);
     // scene.add(ambientLight, mainLight, meshGroup);
@@ -47,7 +49,7 @@ class World {
 
     const resizer = new Resizer(container, camera, renderer);
 
-    scene.add(createAxesHelper(), createGridHelper());
+    // scene.add(createAxesHelper(), createGridHelper());
 
     // we do not need this because we are using the loop
     // resizer.onResize = () => {
@@ -59,6 +61,15 @@ class World {
       this.render();
     });
   }
+
+  async init() {
+    const { parrot, flamingo, stork } = await loadBirds();
+
+    controls.target.copy(parrot.position);
+
+    scene.add(parrot, flamingo, stork);
+  }
+
   // 2. Render the scene
   render() {
     renderer.render(scene, camera);
